@@ -1,13 +1,12 @@
 #ifndef _SIMUL_RBTREE_H
 #define _SIMUL_RBTREE_H
 
-#define SIMUL_RB_RED      0
-#define SIMUL_RB_BLACK   1
-#define SIMUL_INIT_KEY   -1
-#define SIMUL_RB_NIL      -2
-#define SIMUL_RB_NOT_EXIST   -3
-#define SIMUL_RB_EXIST   -4
-#define SWAP_COUNT	3
+#define SIMUL_RB_RED		0
+#define SIMUL_RB_BLACK	1
+#define SIMUL_INIT_KEY	-1
+#define SIMUL_RB_NIL		-2
+#define SIMUL_RB_NOT_EXIST	-3
+#define SIMUL_RB_EXIST	-4
 
 typedef struct simul_rb_node {
 	unsigned int rb_color;
@@ -15,8 +14,6 @@ typedef struct simul_rb_node {
 	struct simul_rb_node *rb_parent;
 	struct simul_rb_node *rb_right;
 	struct simul_rb_node *rb_left;
-	unsigned int count;
-	unsigned int is_free;
 } simul_rb_node;
 
 typedef struct simul_rb_root {
@@ -24,17 +21,10 @@ typedef struct simul_rb_root {
 	simul_rb_node *nil_node;
 } simul_rb_root;
 
-struct simul_swap_node {
-	simul_rb_node *node;
-	struct simul_swap_node *prev;
-	struct simul_swap_node *next;
-};
-
 simul_rb_node *parent_of(simul_rb_node *node);
 simul_rb_node *right_of(simul_rb_node *node);
 simul_rb_node *left_of(simul_rb_node *node);
 
-void init_swap_node();
 void init_rb_node(simul_rb_root *T, simul_rb_node *node, long long int key);
 void init_rb_root(simul_rb_root *root);
 
@@ -45,13 +35,11 @@ void set_rb_black(simul_rb_node *node);
 void set_rb_red(simul_rb_node *node);
 
 simul_rb_root *simul_rb_alloc_root(void);
-simul_rb_node *simul_rb_left_rotate(simul_rb_root *T, simul_rb_node *node);
-simul_rb_node *simul_rb_right_rotate(simul_rb_root *T, simul_rb_node *node);
+unsigned int simul_rb_left_rotate(simul_rb_root *T, simul_rb_node *node);
+unsigned int simul_rb_right_rotate(simul_rb_root *T, simul_rb_node *node);
 unsigned int simul_rb_transplant(simul_rb_root *T, simul_rb_node *pre_node, simul_rb_node *chg_node);
 simul_rb_node *simul_rb_minimum(simul_rb_node *node);
 simul_rb_node *simul_rb_successor(simul_rb_root* T, simul_rb_node *node);
-void simul_rb_swapping(simul_rb_root *T);
-void add_swap_list(simul_rb_node *node);
 
 int simul_rb_insert(simul_rb_root *T, long long int inkey);
 void simul_rb_insert_fixup(simul_rb_root *T, simul_rb_node *alt_node);

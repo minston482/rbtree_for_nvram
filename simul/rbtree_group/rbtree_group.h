@@ -1,5 +1,7 @@
-#ifndef _SIMUL_RBTREE_H
-#define _SIMUL_RBTREE_H
+#ifndef _SIMUL_RBTREE_GROUP_H
+#define _SIMUL_RBTREE_GROUP_H
+
+#include "linked_list.h"
 
 #define SIMUL_RB_RED      0
 #define SIMUL_RB_BLACK   1
@@ -7,15 +9,23 @@
 #define SIMUL_RB_NIL      -2
 #define SIMUL_RB_NOT_EXIST   -3
 #define SIMUL_RB_EXIST   -4
-#define SWAP_COUNT	3
+#define SIMUL_RB_IN_GROUP	-5
+#define SWAP_COUNT	5
+#define GROUP_SIZE	10
+
+typedef struct simul_rb_key {
+	long long int rb_key;
+	struct simul_list_head list;
+} simul_rb_key;
 
 typedef struct simul_rb_node {
 	unsigned int rb_color;
-	long long int rb_key;
+	long long int std_key;
+	struct simul_list_head rb_keys;
 	struct simul_rb_node *rb_parent;
 	struct simul_rb_node *rb_right;
 	struct simul_rb_node *rb_left;
-	unsigned int count;
+	unsigned long count;
 	unsigned int is_free;
 } simul_rb_node;
 
@@ -35,7 +45,8 @@ simul_rb_node *right_of(simul_rb_node *node);
 simul_rb_node *left_of(simul_rb_node *node);
 
 void init_swap_node();
-void init_rb_node(simul_rb_root *T, simul_rb_node *node, long long int key);
+void init_rb_key(simul_rb_key *key_node, long long int key);
+void init_rb_node(simul_rb_root *T, simul_rb_node *node, simul_rb_key *key_node);
 void init_rb_root(simul_rb_root *root);
 
 unsigned int is_rb_black(simul_rb_node *node);
@@ -50,6 +61,7 @@ simul_rb_node *simul_rb_right_rotate(simul_rb_root *T, simul_rb_node *node);
 unsigned int simul_rb_transplant(simul_rb_root *T, simul_rb_node *pre_node, simul_rb_node *chg_node);
 simul_rb_node *simul_rb_minimum(simul_rb_node *node);
 simul_rb_node *simul_rb_successor(simul_rb_root* T, simul_rb_node *node);
+//simul_rb_node *simul_rb_swapping(simul_rb_root *T, simul_rb_node *old_node);
 void simul_rb_swapping(simul_rb_root *T);
 void add_swap_list(simul_rb_node *node);
 
